@@ -19,7 +19,7 @@
                       </div>
                       <figcaption class="info">
                         <p>{{ item.product.slug }}</p>
-                        <span class="text-muted">2x = $560 </span>
+                        <span class="text-muted">{{ item.quantity }}x = ${{ item.sub_total }} </span>
                       </figcaption>
                     </figure>
                   </div>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                       <label>Phone</label>
-                      <input type="text" value="+998" class="form-control" />
+                      <input type="text" value="+91" class="form-control" />
                     </div>
                     <div class="form-group col-sm-6">
                       <label>Email</label>
@@ -246,16 +246,16 @@
               <div class="card-body">
                 <dl class="dlist-align">
                   <dt>Total price:</dt>
-                  <dd class="text-right">$69.97</dd>
+                  <dd class="text-right">${{ total_price }}</dd>
                 </dl>
                 <dl class="dlist-align">
                   <dt>Tax:</dt>
-                  <dd class="text-right">$10.00</dd>
+                  <dd class="text-right">${{ tax }}</dd>
                 </dl>
                 <dl class="dlist-align">
                   <dt>Total:</dt>
                   <dd class="text-right text-dark b">
-                    <strong>$59.97</strong>
+                    <strong>${{ grand_total }}</strong>
                   </dd>
                 </dl>
                 <hr />

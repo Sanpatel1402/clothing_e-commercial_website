@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
 
 # Create your models here.
 
@@ -23,18 +22,28 @@ class MyAccountManager(BaseUserManager):
         return user
 
     def create_superuser(self, first_name, last_name, username, email, password):
-        user = self.create_user(
-            email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            password=password,
-        )
+        user = self.create_user(email=self.normalize_email(email), username=username, first_name=first_name,
+                                last_name=last_name, password=password)
 
         user.is_admin = True
         user.is_active = True
         user.is_staff = True
         user.is_superadmin = True
+        user.save(using=self._db)
+        return user
+
+    def user(self, email, first_name, last_name, pass1, pass2):
+        if not email:
+            raise ValueError('user must have an email address')
+
+        user = self.model(
+            email=self.normalize_email(email),
+            first_name=first_name,
+            last_name=last_name,
+            pass1=pass1,
+            pass2=pass2
+        )
+        user.set_password(pass1, pass2)
         user.save(using=self._db)
         return user
 
@@ -56,7 +65,7 @@ class Account(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
-    object = MyAccountManager()
+    objects = MyAccountManager()
 
     def __str__(self):
         return self.email
@@ -66,3 +75,8 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, add_label):
         return True
+
+
+class User(AbstractUser):
+    is_admin = models.BooleanField('Is Admin', default=False)
+    is_customer = models.BooleanField('Is Customer', default=True)

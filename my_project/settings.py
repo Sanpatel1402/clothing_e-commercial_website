@@ -25,8 +25,6 @@ SECRET_KEY = 'django-insecure-wzo8exan6itu*hf-w@)wc(!=4^4&9(cbal(_ob#ej8^w_07n__
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -77,6 +75,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'my_project.wsgi.application'
 
 AUTH_USER_MODEL = 'Accounts.Account'
+# AUTH_USER = 'project.signup'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
